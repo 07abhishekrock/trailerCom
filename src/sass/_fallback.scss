@@ -1,0 +1,13 @@
+@use './variables' as variables;
+.fallback-wrapper{
+  display:grid;
+  place-items:center;
+  position:absolute;
+  inset:0px;
+  padding:0.5em;
+  & .spinner-loading__icon{
+    animation:spinning 1s linear infinite;
+    width:1em;
+    height:1.2em;
+  }
+}

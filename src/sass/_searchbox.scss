@@ -1,0 +1,48 @@
+@use './variables' as variables;
+.search-box{
+  &__input-wrapper{
+    position:relative;
+    display:flex;
+    align-items:center;
+    padding:0.5em 1em;
+    font-family:variables.$main_font;
+    border-radius:0.1em;
+    width:500px;
+    max-width:80%;
+    margin:0 auto;
+    font-size:1.2em;
+    background-color:white;
+    &:focus-within{
+      &::after{
+        background-color:lightgray;
+      }
+    }
+    &::after{
+      position:absolute;
+      right:-0.3em;
+      width:30%;
+      height:120%;
+      border-radius:0.2em;
+      top:50%;
+      transform:translateY(-50%);
+      background-color:variables.$primary_color;
+      content:"";
+      z-index:-1;
+    }
+  }
+  &__search-icon{
+    width:1.2em;
+    color:variables.$gray_color;
+    display:block;
+  }
+  &__input{
+    flex-grow:1;
+    border:0px solid black;
+    font-size:inherit;
+    font-family:inherit;
+    padding-left:0.5em;
+    &:focus , &:focus-within{
+      outline:none;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@use './variables' as variables;
+@use './navbar' as navbar;
+@use './searchbox' as searchbox;
+@use './movies' as movies;
+@use './trailer' as trailer;
+@use './fallback' as fallback;
+
+
+@keyframes spinning{
+  from{
+    transform:rotateZ(0deg);
+  }
+  to{
+    transform:rotateZ(360deg);
+  }
+}
+
+body{
+  background-image:url('../images/wallpaper-light.svg');
+  background-size:contain;
+}
+div.all-content-wrapper{
+  scroll-behavior: smooth;
+}

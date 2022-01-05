@@ -1,0 +1,350 @@
+@use './variables' as variables;
+$trailer_window_width : 35vw;
+$trailer_window_shadow_offset : 10px;
+$trailer_window_width_half : 45vw;
+$trailer_window_width_full_screen : 90vw;
+$trailer_window_width_small : 85vw;
+
+$movie_info_width : 200px;
+$movie_videos_width : 300px;
+
+$movie_videos_width_lg : 250px;
+$gap_lg : 3vw;
+
+.trailer-page-wrapper{
+  position:fixed;
+  width:100%;
+  height:100%;
+  overflow:auto;
+  top:0px;
+  left:0px;
+  background-color:white;
+  transform:translateX(100%);
+  scroll-behavior: smooth;
+  &[view="1"]{
+    transform:translateX(0px);
+  }
+  z-index:101;
+}
+.trailer-page{
+  padding: 1em 2em;
+  display:flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family:variables.$main_font;
+  gap:5vw;
+  &-video{
+    width:$trailer_window_width;
+    position: sticky;
+    top:1em;
+    & .trailer-embed-video-player{
+      & .youtube-video{
+        position:relative;
+        &__window{
+          height:calc($trailer_window_width * calc(9 / 16));
+          min-height:100px;
+          border-radius:1em;
+        }
+        position:relative;
+        &>*{
+          border-radius:inherit;
+        }
+        &::after{
+          position:absolute;
+          height:40%;
+          width:calc(100% + calc(2 * $trailer_window_shadow_offset));
+          background-color:#f1f1f1;
+          content:"";
+          top:-$trailer_window_shadow_offset;
+          border-radius:0.5em;
+          left:-$trailer_window_shadow_offset;
+          z-index:-1;
+        }
+        &__controls{
+          display:flex;
+          gap:0.5em;
+          justify-content: center;
+          align-items:center;
+          margin-top:0.5em;
+          &__change-track-btn{
+            width:1em;
+            height:1em;
+            font-size:2.5em;
+            padding:0px;
+            background-color:transparent;
+            border:0px solid black;
+            color:variables.$nav_background;
+            cursor:pointer;
+            border-radius: 50%;
+            &--prev{
+              transform:rotateZ(-180deg);
+            }
+            &[disabled]{
+              color:variables.$disabled_main_color;
+            }
+            &:hover{
+              color:variables.$primary_color;
+              &[disabled]{
+                color : variables.$disabled_main_color;
+              }
+            }
+            
+          }
+          &__play-btn{
+            width:1em;
+            height:1em;
+            display:block;
+            padding:0px;
+            font-size:3em;
+            background-color:transparent;
+            border:0px solid black;
+            color:variables.$nav_background;
+            cursor:pointer;
+            &:hover{
+              color:variables.$primary_color;
+            }
+          }
+        }
+      }
+    }
+  }
+  & .movies-videos-list{
+    width:$movie_videos_width;
+    flex-shrink:0;
+    height:450px;
+    overflow:auto;
+    padding:1em;
+    background-color:variables.$light_gray_color;
+    margin:0px;
+    list-style:none;
+    border-radius:0.5em;
+    position:relative;
+    &__item{
+      position:relative;
+      &:not(:last-child){margin-bottom:2em;}
+      &[video-selected="1"]{
+        & img{
+          outline:4px solid variables.$primary_color;
+          outline-offset:-2px;
+        }
+      }
+      & img{
+        border-radius:0.1em;
+        width:100%;
+      }
+      &__title{
+        margin:0px;
+        margin-bottom:0.5em;
+        font-weight:500;
+        font-size:0.9em;
+      }
+      &__icon{
+        width:2em;
+        height:2em;
+        display:block;
+        position:absolute;
+        top:1em;
+        left:0.5em;
+        color:variables.$primary_color;
+      }
+    }
+  }
+  & .watch-providers-list{
+    width:$movie_info_width;
+    padding: 1em;
+    flex-shrink: 0;
+    background-color:variables.$light_gray_color;
+    box-sizing:border-box;
+    border-radius:0.5em;
+    position:relative;
+    min-height:3em;
+    &__block{
+      &__heading{
+        margin:0px;
+        font-weight: 500;
+      }
+      &__items{
+        list-style:none;
+        padding-left:0px;
+        display:grid;
+        grid-template-columns:repeat(3 , 1fr);
+        & img{
+          width:2em;
+        }
+      }
+    }
+  }
+
+  & .movie-cast{
+    & .movie-cast__container{
+      background-color:variables.$light_gray_color;
+      border-radius:0.3em;
+      min-height:100px;
+      position:relative;
+      box-sizing:border-box;
+      width:250px;
+      & .movie-cast__list{
+        padding:1em;
+        margin:0px;
+        list-style:none;
+        display:grid;
+        grid-template-columns:repeat(2 , 1fr);
+        gap:1em 0.5em;
+        & .cast-member{
+          width:100%;
+          flex-shrink:0;
+          & h5{
+            margin:0.3em 0px;
+            font-weight:500;
+            font-size:0.7em;
+          }
+          &__character{
+            color:gray;
+          }
+          &__image{
+            width:50px;
+            height:50px;
+            object-fit:cover;
+            border-radius:50%;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width:1200px){
+    gap:$gap_lg;
+    & .movies-videos-list{
+      width: $movie_videos_width_lg;
+    }
+  } 
+  @media screen and (max-width:1000px){
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-gap:5vw;
+    & .movies-videos-list-wrapper{
+      grid-column: 2 / 3;
+    }
+    &-video{
+      width:$trailer_window_width_half;
+      & .youtube-video__window
+      {
+        height:calc($trailer_window_width_half * calc(9 / 16))!important;
+      }
+    }
+  }
+  @media screen and (max-width:800px){
+    display:block;
+    padding:1em;
+    box-sizing: border-box;
+    &-video{
+      position:relative;
+      width:$trailer_window_width_full_screen;
+      & .youtube-video__window
+      {
+        height : calc($trailer_window_width_full_screen * calc(9 / 16))!important;
+      }
+      border-bottom:3px solid variables.$disabled_main_color;
+    }
+    & .movies-videos-list-wrapper{
+      margin-top:3em;
+    }
+    & .movies-videos-list{
+      width:100%;
+      box-sizing: border-box;
+      height:auto;
+      display:grid;
+      grid-template-columns: repeat(2 , 1fr);
+      grid-gap:2vw;
+    }
+    & .movie-cast__list{
+      width:100%;
+      box-sizing: border-box;
+      grid-template-columns: repeat(4 , 1fr)!important;
+    }
+    & .movie-cast{
+      margin-top:3em;
+    }
+    & .movie-cast__container{
+      width:100%!important;
+    }
+    & .watch-providers{
+      margin-top:3em;
+    }
+  }
+  @media screen and (max-width:600px){
+    & .movie-cast__list{
+      grid-template-columns:repeat(3 , 1fr)!important;
+    }
+  }
+
+  @media screen and (max-width:400px){
+    &-video{
+      width:$trailer_window_width_small;
+    }
+    & .movie-cast__list{
+      grid-template-columns:repeat(2 , 1fr)!important;
+    }
+    & .youtube-video__window{
+      height : calc($trailer_window_width_small * calc(9 / 16));
+    }
+    & .movies-videos-list{
+      display: block;
+    }
+  }
+}
+$icon_size : 2em;
+$icon_floating_size : 1.5em;
+.trailer-bar{
+  font-family:variables.$main_font;
+  padding:1em;
+  background-color:variables.$primary_color;
+  display:flex;
+  align-items:center;
+  &__arrow{
+    width:$icon_size;
+    height:$icon_size;
+    display:block;
+    color:variables.$primary_color;
+    background-color:white;
+    border-radius:50%;
+    flex-shrink:0;
+    transition:outline 0.2s ease-out , outline-offset 0.2s ease-out;
+    &:hover{
+      outline-offset:2px;
+      outline:2px solid white;
+    }
+  }
+  &__heading{
+    margin-left:1em;
+    &__status{
+      margin:0px;
+      color:variables.$disabled_main_color;
+      line-height:0.8em;
+    }
+    &__movie{
+      color:white;
+      line-height:1em;
+      margin:0px;
+      font-size:1.5em;
+    }
+  }
+}
+.trailer-bar[floating="1"]{
+  width:350px;
+  max-width:80%;
+  position:fixed;
+  z-index:100;
+  bottom:0px;
+  right:0px;
+  border-radius:1em 0px 0px 0px;
+  box-shadow:-3px -3px 0px 5px variables.$disabled_main_color;
+  & .trailer-bar__arrow{
+    width:$icon_floating_size;
+    height:$icon_floating_size;
+    transform:rotateZ(90deg);
+  }
+  & .trailer-bar__heading{
+    font-size:0.9em;
+  }
+}
